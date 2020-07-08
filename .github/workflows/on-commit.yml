@@ -1,0 +1,12 @@
+name: on-commit
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  my-simple-job:
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "Unbelievable success!"
