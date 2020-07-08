@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  check-updated-files:
+  my-simple-job:
     runs-on: ubuntu-latest
     steps:
         - run: echo "hellp"
