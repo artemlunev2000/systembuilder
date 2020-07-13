@@ -3,7 +3,7 @@ name: on-commit
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   my-simple-job:
