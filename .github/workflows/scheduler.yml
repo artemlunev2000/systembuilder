@@ -9,4 +9,4 @@ jobs:
   my-simple-job:
     runs-on: ubuntu-latest
     steps:
-        - run: echo "hellp"
+        - run: echo "help"
