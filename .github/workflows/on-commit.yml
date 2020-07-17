@@ -10,3 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - run: echo "Unbelievable success!"
+  
+  job-checkout:
+    runs-on: ubuntu latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        
+        
