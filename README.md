@@ -1,3 +1,3 @@
 # systembuilder
 
-test upd
+testing upd
