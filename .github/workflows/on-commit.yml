@@ -9,7 +9,7 @@ jobs:
   my-simple-job:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
