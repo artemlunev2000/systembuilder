@@ -4,9 +4,10 @@ import yaml
 
 
 class Manifest:
-    arguments = ['name', 'description', 'author', 'url', 'documentation'
-        , 'version', 'vendor', 'license', 'avatar'
-        , 'platform', 'update', 'keywords']
+    required_arg = ['name', 'description']
+    optional_arg = ['author', 'url', 'documentation'
+                            , 'version', 'vendor', 'license', 'avatar'
+                            , 'platform', 'update', 'keywords']
 
     @staticmethod
     def check_existent(path):
@@ -17,15 +18,13 @@ class Manifest:
             with open(path) as f:
                 return yaml.safe_load(f)
         else:
-            return None
+            raise ValueError("Incorrect file path")
 
     def validation(self, data, level=0):
         if level == 0:
-            if 'name' not in data:
-                raise KeyError(f'Required argument "name" no exist')
-
-            if 'description' not in data:
-                raise KeyError(f'Required argument "description" no exist')
+            for arg in self.required_arg:
+                if arg not in data:
+                    raise KeyError(f'Required argument {arg} no exist')
 
         for item in data.items():
             if type(item[1]) is dict:
@@ -33,5 +32,5 @@ class Manifest:
             if type(item[1]) is list:
                 for l in item[1]:
                     self.validation(l, level=level + 1)
-            if item not in self.arguments:
+            if item not in self.optional_arg:
                 raise KeyError(f'Unknown argument {item}')
