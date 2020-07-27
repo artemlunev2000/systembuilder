@@ -5,9 +5,9 @@ import yaml
 
 class Manifest:
     required_arg = ['name', 'description']
-    optional_arg = ['author', 'url', 'documentation'
-                            , 'version', 'vendor', 'license', 'avatar'
-                            , 'platform', 'update', 'keywords']
+    optional_arg = ['author', 'url', 'documentation',
+                    'version', 'vendor', 'license', 'avatar',
+                    'platform', 'update', 'keywords']
 
     @staticmethod
     def check_existent(path):
@@ -30,7 +30,7 @@ class Manifest:
             if type(item[1]) is dict:
                 self.validation(item[1], level=level + 1)
             if type(item[1]) is list:
-                for l in item[1]:
-                    self.validation(l, level=level + 1)
+                for lst in item[1]:
+                    self.validation(lst, level=level + 1)
             if item not in self.optional_arg:
                 raise KeyError(f'Unknown argument {item}')
