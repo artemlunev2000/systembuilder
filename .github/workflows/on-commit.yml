@@ -11,9 +11,12 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
     steps:
+      # - name: Prerun
+        # run: apt-get update && apt-get upgrade
+
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Notify
-        run: cd chore && pip install -r requirements.txt && python3 tgNotifier.py
+        run: cd chore && pip3 install -r requirements.txt && python3 tgNotifier.py
         
