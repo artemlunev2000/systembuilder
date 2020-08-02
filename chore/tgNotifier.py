@@ -17,8 +17,8 @@ class Parser:
 class Notifier:
 
 	def __init__(self, raw):
-		self.chat_id = 417554679 # anton
-		# self.chat_id = -420442510 # ksk2020
+		# self.chat_id = 417554679 # anton
+		self.chat_id = -420442510 # ksk2020
 		self.status = raw['status']
 		self.bot = telebot.TeleBot(TOKEN)
 
