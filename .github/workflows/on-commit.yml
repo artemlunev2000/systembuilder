@@ -3,7 +3,7 @@ name: on-commit
 on:
   push:
     branches:
-      - feat/notifier
+      - develop
 
 jobs:
   my-simple-job:
