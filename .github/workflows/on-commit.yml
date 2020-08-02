@@ -15,6 +15,5 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Notify
-        run: |
-        pip3 install pyTelegramBotAPI && cd chore && python3 tgNotifier.py
+        run: pip3 install pyTelegramBotAPI && cd chore && python3 tgNotifier.py
         
