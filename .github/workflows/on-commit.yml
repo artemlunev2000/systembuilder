@@ -16,5 +16,5 @@ jobs:
 
       - name: Notify
         run: |
-        pip3 install pytelegrambotapi && cd chore && python3 tgNotifier.py
+        pip3 install pyTelegramBotAPI && cd chore && python3 tgNotifier.py
         
