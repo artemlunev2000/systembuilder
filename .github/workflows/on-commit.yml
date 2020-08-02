@@ -15,5 +15,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Notify
-        run: cd chore && python3 tgNotifier.py
+        run: |
+        pip3 install pytelegrambotapi && cd chore && python3 tgNotifier.py
         
