@@ -24,8 +24,6 @@ jobs:
         id: testing
         run: |
           python3 -m pip install pytest 
-          PATH="/home/runner/.local/bin:${PATH}"
-          export PATH
           for FILEPATH in $TRIGGERS;
             do 
               pytest $FILEPATH;
