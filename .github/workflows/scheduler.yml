@@ -5,18 +5,31 @@ on:
     - cron: "*/5 * * * *"
 
 jobs:
-
-  my-simple-job:
+  build:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      tested: ${{steps.testing.outputs.tested}}
+
     steps:
+      - name: Prerun
+        run: python3 -m pip install --upgrade pip setuptools wheel
+        
       - name: Checkout
         uses: actions/checkout@v2
-        #- run: echo "help"
-  
-  #job-checkout:
-    #runs-on: ubuntu-latest
-    #steps:
-      #- name: Checkout
-       # uses: actions/checkout@v2
+        
+      - name: Pytest
+        id: testing
+        run: |
+          python3 -m pip install pytest 
+          python3 -m pip install -e .
+          PATH="/home/runner/.local/bin:${PATH}"
+          export PATH
+          for FILEPATH in $TRIGGERS;
+            do 
+              pytest $FILEPATH;
+            done
+          echo "::set-output name=tested::true"; 
+        env:
+          TRIGGERS: src/test/Builder_test.py
