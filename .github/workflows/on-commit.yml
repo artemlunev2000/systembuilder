@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Testing-step
+      - name: Pytest
         id: testing
         run: |
           python3 -m pip install pytest 
