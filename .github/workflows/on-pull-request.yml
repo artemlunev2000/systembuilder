@@ -9,6 +9,9 @@ jobs:
     outputs:
       tested: ${{steps.testing.outputs.tested}}
     steps:
+      - name: Prerun
+        run: python3 -m pip install --upgrade pip setuptools wheel
+        
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
