@@ -36,20 +36,6 @@ jobs:
         env:
           TRIGGERS: src/test/Builder_test.py
 
-      - name: Pytest
-        id: testing
-        run: |
-          python3 -m pip install pytest 
-          PATH="/home/runner/.local/bin:${PATH}"
-          export PATH
-          for FILEPATH in $TRIGGERS;
-            do 
-              pytest $FILEPATH;
-            done
-          echo "::set-output name=tested::true"; 
-        env:
-          TRIGGERS: test_builder.py
-
       - name: Notify
         run: |
           cd chore
