@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from src.builder import Builder
+from src.main.Builder import Builder
 from time import sleep
 
 
