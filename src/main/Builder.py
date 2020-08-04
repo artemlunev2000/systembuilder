@@ -1,6 +1,6 @@
 import subprocess
 from subprocess import Popen
-from manifest import Manifest
+from Manifest import Manifest
 
 
 class Builder:
