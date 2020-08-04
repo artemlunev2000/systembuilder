@@ -10,7 +10,7 @@ class Builder:
         Popen(['git', 'clone', url, './repo/'])
 
     @staticmethod
-    def generate_status_file(self, status, message=""):
+    def generate_status_file(status, message=""):
         json_status = {}
         with open('version.txt', 'r') as version_file:
             json_status['release'] = float(version_file.read())
