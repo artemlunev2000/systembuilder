@@ -18,9 +18,21 @@ def test_clone_repo():
 
 def test_generate_status_file_with_error():
     builder = Builder()
-    builder.generate_status_file_with_error('error')
+    builder.generate_status_file(False, 'error')
     assert os.path.isfile('status.json')
     with open('status.json') as status_file:
         status = json.load(status_file)
+    assert not status['status']
     assert status['message'] == 'error'
+    os.remove('status.json')
+
+
+def test_generate_status_file_without_error():
+    builder = Builder()
+    builder.generate_status_file(True)
+    assert os.path.isfile('status.json')
+    with open('status.json') as status_file:
+        status = json.load(status_file)
+    assert status['status']
+    assert status['message'] == ""
     os.remove('status.json')
