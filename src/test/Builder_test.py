@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 
 from src.main.Builder import Builder
@@ -12,4 +13,14 @@ def test_clone_repo():
     sleep(5)
     assert os.path.isfile('./repo/README.md')
     # deleting directory after testing, might not work on windows because can't delete .git file.
-    #shutil.rmtree('./repo', ignore_errors=True)
+    # shutil.rmtree('./repo', ignore_errors=True)
+
+
+def test_generate_status_file_with_error():
+    builder = Builder()
+    builder.generate_status_file_with_error('error')
+    assert os.path.isfile('status.json')
+    with open('status.json') as status_file:
+        status = json.load(status_file)
+    assert status['message'] == 'error'
+    os.remove('status.json')
