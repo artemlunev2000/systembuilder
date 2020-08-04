@@ -9,6 +9,7 @@ class Builder:
     def clone_repo(self, url):
         Popen(['git', 'clone', url, './repo/'])
 
+    @staticmethod
     def generate_status_file(self, status, message=""):
         json_status = {}
         with open('version.txt', 'r') as version_file:
