@@ -2,7 +2,7 @@ import os
 import json
 import shutil
 
-from src.main.Builder import Builder
+from src.main.builder import Builder
 from time import sleep
 
 

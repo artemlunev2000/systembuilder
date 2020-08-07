@@ -2,7 +2,7 @@ import json
 import subprocess
 from subprocess import Popen
 from datetime import datetime
-from src.main.Manifest import Manifest
+from src.main.manifest import Manifest
 
 
 class Builder:
