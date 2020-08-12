@@ -2,10 +2,12 @@ import json
 import subprocess
 from subprocess import Popen
 from datetime import datetime
-from src.main.manifest import Manifest
 
 
 class Builder:
+    def __init__(self, manifest):
+        self.__manifest = manifest
+
     def clone_repo(self, url):
         Popen(['git', 'clone', url, './repo/'])
 
@@ -27,10 +29,13 @@ class Builder:
     #     parser.add_argument('--path', type=str, help='Set path to docker file', default='.', dest='path')
     #     return parser
 
-    @staticmethod
-    def get_build():
-        yaml = Manifest()
-        data = yaml.load_file('.').items()
+    def create_dockerfile(self, path):
+        data = self.__manifest.load_file(path)
+        with open('DOCKERFILE', 'w') as outfile:
+            outfile.write(data['docker']['dockerfile'] + '\nLABEL ' + data['docker']['parameters'].__str__())
+
+    def get_build(self):
+        data = self.__manifest.load_file('.').items()
         docker_build_cmd = ['docker', 'buildx', 'build']
         docker_build_arg = ['--platform', data['platform'], data['path']]
         subprocess.check_call(docker_build_cmd + docker_build_arg)
