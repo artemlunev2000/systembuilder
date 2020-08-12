@@ -4,7 +4,7 @@ import yaml
 
 
 class Manifest:
-    required_arg = ['name', 'description']
+    required_arg = ['name', 'description', 'docker', 'dockerfile', 'parameters']
     optional_arg = ['author', 'url', 'documentation',
                     'version', 'vendor', 'license', 'avatar',
                     'platform', 'update', 'keywords']
