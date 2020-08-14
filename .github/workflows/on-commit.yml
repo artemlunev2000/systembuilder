@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: "!startsWith(github.event.head_commit.message, 'chore')"
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
@@ -19,8 +20,11 @@ jobs:
         run: python3 -m pip install --upgrade pip setuptools wheel
 
       - name: Checkout
-        uses: actions/checkout@v2
-        
+        uses: actions/checkout@v2 
+        with:
+          repository: antonkurenkov/systembuilder
+          token: ${{ secrets.DEV_BOT_TOKEN }}
+
       - name: Pytest
         id: testing
         run: |
@@ -35,6 +39,24 @@ jobs:
           echo "::set-output name=tested::true"; 
         env:
           TRIGGERS: src/test/test_builder.py
+
+      - name: Building
+        run: python3 app.py
+
+      - name: Commit status
+        run: |
+          git config --local user.email "aka1306@gmail.com"
+          git config --local user.name "dev-bot0"
+          git add status.json 
+          git commit -qm "chore: update status" -a
+
+      - name: Push status
+        uses: ad-m/github-push-action@master
+        with: 
+          github_token: ${{ secrets.DEV_BOT_TOKEN }}
+          repository: antonkurenkov/systembuilder
+          branch: develop
+          force: true
 
       - name: Notify
         run: |
