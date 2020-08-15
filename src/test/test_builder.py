@@ -15,6 +15,7 @@ class BuilderTest(unittest.TestCase):
                 'name': 'test', 'description': 'test'}
         with open('info.yaml', 'w') as file:
             yaml.dump(data, file)
+	unittest.TestCase.__init__(self, *args, **kwargs)
 
     def test_clone_repo(self):
         builder = Builder(Manifest('info.yaml'))
