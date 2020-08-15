@@ -4,7 +4,11 @@ import yaml
 
 
 class Manifest:
-    required_arg = ['name', 'description', 'docker', 'dockerfile', 'parameters']
+    def __init__(self, path):
+        self.data = self.load_file(path)
+        self.validation(self.data)
+
+    required_arg = ['name', 'description', 'docker']
     optional_arg = ['author', 'url', 'documentation',
                     'version', 'vendor', 'license', 'avatar',
                     'platform', 'update', 'keywords']

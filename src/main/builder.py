@@ -29,13 +29,13 @@ class Builder:
     #     parser.add_argument('--path', type=str, help='Set path to docker file', default='.', dest='path')
     #     return parser
 
-    def create_dockerfile(self, path):
-        data = self.__manifest.load_file(path)
+    def create_dockerfile(self):
+        data = self.__manifest.data
         with open('DOCKERFILE', 'w') as outfile:
             outfile.write(data['docker']['dockerfile'] + '\nLABEL ' + data['docker']['parameters'].__str__())
 
     def get_build(self):
-        data = self.__manifest.load_file('.').items()
+        data = self.__manifest.data.items()
         docker_build_cmd = ['docker', 'buildx', 'build']
         docker_build_arg = ['--platform', data['platform'], data['path']]
         subprocess.check_call(docker_build_cmd + docker_build_arg)

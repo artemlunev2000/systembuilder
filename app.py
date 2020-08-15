@@ -1,14 +1,25 @@
+import argparse
+
 from src.main.builder import Builder
 from src.main.manifest import Manifest
 
-builder = Builder(Manifest())
 
-try:
-	builder.get_build()
-	message = ""
+def build(path):
 	status = True
-except Exception as e:
-	message = str(e) 
-	status = False
+	message = None
 
-builder.generate_status_file(status, message)
+	try:
+		manifest = Manifest(path)
+		builder = Builder(manifest)
+		builder.create_dockerfile()
+		builder.get_build()
+	except Exception as e:
+		status = False
+		message = str(e)
+	finally:
+		Builder.generate_status_file(status, message)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--path', type=inner_function)
+parser.parse_args()
