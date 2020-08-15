@@ -57,5 +57,5 @@ class BuilderTest(unittest.TestCase):
         with open('DOCKERFILE', 'r') as dockerfile:
             fst_line = dockerfile.readline()
         assert fst_line == 'FROM python:latest\n'
-        #os.remove('info.yaml')
-        #os.remove('DOCKERFILE')
+        os.remove('info.yaml')
+        os.remove('DOCKERFILE')

@@ -4,7 +4,7 @@ from src.main.builder import Builder
 from src.main.manifest import Manifest
 
 
-def build(path):
+def build_project(path):
 	status = True
 	message = None
 
@@ -21,5 +21,5 @@ def build(path):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--path', type=inner_function)
+parser.add_argument('--path', type=build_project)
 parser.parse_args()
