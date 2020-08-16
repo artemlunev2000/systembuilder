@@ -4,10 +4,15 @@ import yaml
 
 
 class Manifest:
-    required_arg = ['name', 'description', 'docker', 'dockerfile', 'parameters']
+    def __init__(self, path):
+        self.data = self.load_file(path)
+        self.validation(self.data)
+
+    required_arg = ['name', 'description', 'docker']
     optional_arg = ['author', 'url', 'documentation',
                     'version', 'vendor', 'license', 'avatar',
-                    'platform', 'update', 'keywords']
+                    'platform', 'update', 'keywords',
+                    'dockerfile', 'parameters']
 
     @staticmethod
     def check_existent(path):
@@ -31,6 +36,7 @@ class Manifest:
                 self.validation(item[1], level=level + 1)
             if type(item[1]) is list:
                 for lst in item[1]:
-                    self.validation(lst, level=level + 1)
-            if item not in self.optional_arg:
+                    if type(lst) is dict:
+                        self.validation(lst, level=level + 1)
+            if item[0] not in self.optional_arg and item[0] not in self.required_arg:
                 raise KeyError(f'Unknown argument {item}')
