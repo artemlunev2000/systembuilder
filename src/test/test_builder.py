@@ -12,7 +12,7 @@ from time import sleep
 class BuilderTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         data = {'docker': {'dockerfile': 'FROM python:latest\nENTRYPOINT ["python"]', 'parameters': ['some parameter']},
-                'name': 'test', 'description': 'test'}
+                'name': 'test', 'description': 'test', 'platform': 'test', 'path': 'test'}
         with open('info.yaml', 'w') as file:
             yaml.dump(data, file)
         unittest.TestCase.__init__(self, *args, **kwargs)
@@ -47,10 +47,6 @@ class BuilderTest(unittest.TestCase):
         os.remove('status.json')
 
     def test_create_dockerfile(self):
-        data = {'docker': {'dockerfile': 'FROM python:latest\nENTRYPOINT ["python"]', 'parameters': ['some parameter']},
-                'name': 'test', 'description': 'test'}
-        with open('info.yaml', 'w') as file:
-            yaml.dump(data, file)
         builder = Builder(Manifest('info.yaml'))
         builder.create_dockerfile()
         assert os.path.isfile('DOCKERFILE')
