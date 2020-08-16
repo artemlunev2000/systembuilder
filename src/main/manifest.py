@@ -8,11 +8,10 @@ class Manifest:
         self.data = self.load_file(path)
         self.validation(self.data)
 
-    required_arg = ['name', 'description', 'docker']
+    required_arg = ['name', 'description', 'docker', 'path', 'platform']
     optional_arg = ['author', 'url', 'documentation',
                     'version', 'vendor', 'license', 'avatar',
-                    'platform', 'update', 'keywords',
-                    'dockerfile', 'parameters']
+                    'update', 'keywords', 'dockerfile', 'parameters']
 
     @staticmethod
     def check_existent(path):
