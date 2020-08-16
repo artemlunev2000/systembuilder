@@ -34,9 +34,9 @@ class Manifest:
         for item in data.items():
             if type(item[1]) is dict:
                 self.validation(item[1], level=level + 1)
-            # if type(item[1]) is list:
-            #     for lst in item[1]:
-            #         self.validation(lst, level=level + 1)
+            if type(item[1]) is list:
+                for lst in item[1]:
+                    if type(lst) is dict:
+                        self.validation(lst, level=level + 1)
             if item[0] not in self.optional_arg and item[0] not in self.required_arg:
                 raise KeyError(f'Unknown argument {item}')
-
