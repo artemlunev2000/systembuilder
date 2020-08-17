@@ -32,10 +32,10 @@ class Builder:
     def create_dockerfile(self):
         data = self.__manifest.data
         with open('DOCKERFILE', 'w') as outfile:
-            outfile.write(data['docker']['dockerfile'] + '\nLABEL ' + data['docker']['parameters'].__str__())
+            outfile.write(data['docker']['dockerfile'] + '\nLABEL parameter=' + data['docker']['parameters'].__str__())
 
     def get_build(self):
-        data = self.__manifest.data.items()
+        data = self.__manifest.data
         docker_build_cmd = ['docker', 'buildx', 'build']
         docker_build_arg = ['--platform', data['platform'], data['path']]
         subprocess.check_call(docker_build_cmd + docker_build_arg)
