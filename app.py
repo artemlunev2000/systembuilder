@@ -1,7 +1,17 @@
 import argparse
+import os
 
 from src.main.builder import Builder
 from src.main.manifest import Manifest
+
+
+def build_projects(path, file_name):
+	os.chdir(path)
+	folders = [f for f in os.listdir('.') if os.path.isdir(f)]
+	for proj in folders:
+		os.chdir(proj)
+		build_project(file_name)
+		os.chdir('..')
 
 
 def build_project(path):
