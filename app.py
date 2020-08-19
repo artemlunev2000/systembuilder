@@ -5,13 +5,18 @@ from src.main.builder import Builder
 from src.main.manifest import Manifest
 
 
-def build_projects(path, file_name):
+def build_projects(path, filename):
+	with open('version.txt', 'r') as version_file:
+		version = float(version_file.read())
 	os.chdir(path)
 	folders = [f for f in os.listdir('.') if os.path.isdir(f)]
-	for proj in folders:
-		os.chdir(proj)
-		build_project(file_name)
+	status_obj = {}
+
+	for project in folders:
+		os.chdir(project)
+		status_obj[project] = build_project(filename)
 		os.chdir('..')
+	Builder.generate_status_file(version, status_obj)
 
 
 def build_project(path):
@@ -27,9 +32,12 @@ def build_project(path):
 		status = False
 		message = str(e)
 	finally:
-		Builder.generate_status_file(status, message)
+		return Builder.generate_status(status, message)
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--path', type=build_project)
-parser.parse_args()
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--path', type=str)
+	parser.add_argument('--filename', type=str)
+	args = parser.parse_args()
+	build_projects(**vars(args))

@@ -12,15 +12,18 @@ class Builder:
         Popen(['git', 'clone', url, './repo/'])
 
     @staticmethod
-    def generate_status_file(status, message=""):
+    def generate_status_file(version, json_status=None):
+        if json_status:
+            status = dict(status=json_status, datetime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), version=version)
+            with open('status.json', 'w') as outfile:
+                json.dump(status, outfile)
+
+    @staticmethod
+    def generate_status(status, message=""):
         json_status = {}
-        with open('version.txt', 'r') as version_file:
-            json_status['release'] = float(version_file.read())
-        json_status['datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         json_status['status'] = status
         json_status['message'] = message
-        with open('status.json', 'w') as outfile:
-            json.dump(json_status, outfile)
+        return json_status
 
     # @staticmethod
     # def get_parse():
@@ -32,10 +35,13 @@ class Builder:
     def create_dockerfile(self):
         data = self.__manifest.data
         with open('DOCKERFILE', 'w') as outfile:
-            outfile.write(data['docker']['dockerfile'] + '\nLABEL parameter=' + data['docker']['parameters'].__str__())
+            docker_data = data['docker']['dockerfile']
+            if data['docker']['parameters']:
+                docker_data += '\nLABEL parameter=' + data['docker']['parameters'].__str__()
+            outfile.write(docker_data)
 
     def get_build(self):
         data = self.__manifest.data
-        docker_build_cmd = ['docker', 'buildx', 'build']
-        docker_build_arg = ['--platform', data['platform'], data['path']]
+        docker_build_cmd = ['docker', 'build']
+        docker_build_arg = [data['path']]
         subprocess.check_call(docker_build_cmd + docker_build_arg)

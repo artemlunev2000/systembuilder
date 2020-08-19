@@ -12,7 +12,7 @@ from time import sleep
 class BuilderTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         data = {'docker': {'dockerfile': 'FROM python:latest\nENTRYPOINT ["python"]', 'parameters': ['some parameter']},
-                'name': 'test', 'description': 'test', 'platform': 'test', 'path': 'test'}
+                'name': 'test', 'description': 'test', 'path': 'test'}
         with open('info.yaml', 'w') as file:
             yaml.dump(data, file)
         unittest.TestCase.__init__(self, *args, **kwargs)
@@ -28,22 +28,25 @@ class BuilderTest(unittest.TestCase):
 
     def test_generate_status_file_with_error(self):
         builder = Builder(Manifest('info.yaml'))
-        builder.generate_status_file(False, 'error')
+        project_status = builder.generate_status(False, "error")
+        builder.generate_status_file(1.0, {"project": project_status})
         assert os.path.isfile('status.json')
         with open('status.json') as status_file:
             status = json.load(status_file)
-        assert not status['status']
-        assert status['message'] == 'error'
+        assert not status['status']['project']['status']
+        assert status['status']['project']['message'] == 'error'
         os.remove('status.json')
 
     def test_generate_status_file_without_error(self):
         builder = Builder(Manifest('info.yaml'))
-        builder.generate_status_file(True)
+        project_status = builder.generate_status(True)
+        builder.generate_status_file(1.0, {"project": project_status})
         assert os.path.isfile('status.json')
         with open('status.json') as status_file:
             status = json.load(status_file)
-        assert status['status']
-        assert status['message'] == ""
+        assert status['status']['project']['status']
+        assert status['status']['project']['message'] == ""
+        assert status['version'] == 1.0
         os.remove('status.json')
 
     def test_create_dockerfile(self):
