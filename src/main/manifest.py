@@ -8,7 +8,7 @@ class Manifest:
         self.data = self.load_file(path)
         self.validation(self.data)
 
-    required_arg = ['name', 'description', 'docker', 'path', 'platform']
+    required_arg = ['name', 'description', 'docker', 'path']
     optional_arg = ['author', 'url', 'documentation',
                     'version', 'vendor', 'license', 'avatar',
                     'update', 'keywords', 'dockerfile', 'parameters']
