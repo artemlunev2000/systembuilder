@@ -1,0 +1,9 @@
+docker: 
+  dockerfile: |-
+    FROM ubuntu:latest
+    RUN echo 123
+  parameters: 
+
+name: test
+description: test
+path: .
