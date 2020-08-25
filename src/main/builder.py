@@ -25,16 +25,9 @@ class Builder:
         json_status['message'] = message
         return json_status
 
-    # @staticmethod
-    # def get_parse():
-    #     parser = argparse.ArgumentParser()
-    #     parser.add_argument('--platform', type=str, help='Set target platform for build', dest='platform')
-    #     parser.add_argument('--path', type=str, help='Set path to docker file', default='.', dest='path')
-    #     return parser
-
     def create_dockerfile(self):
         data = self.__manifest.data
-        with open('DOCKERFILE', 'w') as outfile:
+        with open('Dockerfile', 'w') as outfile:
             docker_data = data['docker']['dockerfile']
             if data['docker']['parameters']:
                 docker_data += '\nLABEL parameter=' + data['docker']['parameters'].__str__()
