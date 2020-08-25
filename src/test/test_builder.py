@@ -52,9 +52,9 @@ class BuilderTest(unittest.TestCase):
     def test_create_dockerfile(self):
         builder = Builder(Manifest('info.yaml'))
         builder.create_dockerfile()
-        assert os.path.isfile('DOCKERFILE')
-        with open('DOCKERFILE', 'r') as dockerfile:
+        assert os.path.isfile('Dockerfile')
+        with open('Dockerfile', 'r') as dockerfile:
             fst_line = dockerfile.readline()
         assert fst_line == 'FROM python:latest\n'
         os.remove('info.yaml')
-        os.remove('DOCKERFILE')
+        os.remove('Dockerfile')
